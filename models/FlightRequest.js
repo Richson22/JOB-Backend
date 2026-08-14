@@ -19,11 +19,10 @@ const flightRequestSchema = new mongoose.Schema({
   requestRef:        { type: String, unique: true },
 }, { timestamps: true });
 
-flightRequestSchema.pre("save", function (next) {
+flightRequestSchema.pre("save", function () {
   if (!this.requestRef) {
     this.requestRef = "FLT-" + Date.now().toString().slice(-8).toUpperCase();
   }
-  next();
 });
 
 module.exports = mongoose.model("FlightRequest", flightRequestSchema);

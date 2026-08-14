@@ -4,11 +4,10 @@ const Application = require("../models/Application");
 const { protect } = require("./auth");
 const { sendApplicationConfirmation } = require("../utils/sendEmail");
 
-router.post("/", protect, async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { fullName, email, serviceNumber, rank, unit, phone, leaveType, startDate, endDate, reason } = req.body;
     const application = new Application({
-      userId: req.user.id,
       fullName, email, serviceNumber, rank, unit, phone,
       leaveType, startDate, endDate, reason,
     });
