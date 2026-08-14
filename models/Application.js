@@ -22,11 +22,10 @@ const applicationSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Auto-generate reference number
-applicationSchema.pre("save", function (next) {
+applicationSchema.pre("save", function () {
   if (!this.applicationRef) {
     this.applicationRef = "UMW-" + Date.now().toString().slice(-8).toUpperCase();
   }
-  next();
 });
 
 module.exports = mongoose.model("Application", applicationSchema);

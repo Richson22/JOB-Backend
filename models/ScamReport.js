@@ -14,11 +14,10 @@ const scamReportSchema = new mongoose.Schema({
   reportRef:      { type: String, unique: true },
 }, { timestamps: true });
 
-scamReportSchema.pre("save", function (next) {
+scamReportSchema.pre("save", function () {
   if (!this.reportRef) {
     this.reportRef = "SCR-" + Date.now().toString().slice(-8).toUpperCase();
   }
-  next();
 });
 
 module.exports = mongoose.model("ScamReport", scamReportSchema);
