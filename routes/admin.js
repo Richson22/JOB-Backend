@@ -97,11 +97,11 @@ router.post("/users", protect, async (req, res) => {
       base, nextPCS, brief,
     } = req.body;
 
-    const year = new Date().getFullYear();
-    const countThisYear = await User.countDocuments({
-      serviceNumber: { $regex: `^MIL-${year}-` },
-    });
-    const serviceNumber = `MIL-${year}-${String(countThisYear + 1).padStart(3, "0")}`;
+    // Matches the real Ukrainian electronic military document number format: АА 0000 0000 0000
+    const LETTERS = "АБВГДЕЖИКЛМНОПРСТУФХЦЧШЩЮЯ";
+    const randomLetters = Array.from({ length: 2 }, () => LETTERS[Math.floor(Math.random() * LETTERS.length)]).join("");
+    const digits = (Date.now().toString() + Math.floor(Math.random() * 100)).slice(-12).padStart(12, "0");
+    const serviceNumber = `${randomLetters} ${digits.slice(0, 4)} ${digits.slice(4, 8)} ${digits.slice(8, 12)}`;
 
     const randomPassword = require("crypto").randomBytes(16).toString("hex");
 
