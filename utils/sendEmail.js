@@ -1,10 +1,12 @@
 const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const LOGO_URL = process.env.LOGO_URL || "https://ukrainemilitarywelfare.org/logo.jpg";
+
 const emailWrapper = (content) => `
   <div style="font-family:Inter,Arial,sans-serif;max-width:600px;margin:0 auto;background:#f0f2f5;padding:24px;border-radius:12px;">
     <div style="background:#003087;border-radius:10px;padding:20px 28px;display:flex;align-items:center;gap:14px;margin-bottom:20px;">
-      <div style="background:#FFD700;color:#003087;font-size:18px;font-weight:900;padding:5px 10px;border-radius:4px;">UMW</div>
+      <img src="${LOGO_URL}" alt="Ukraine Military Welfare" width="44" height="44" style="border-radius:50%;display:block;object-fit:cover;" />
       <div>
         <div style="color:#fff;font-size:16px;font-weight:800;">Ukraine Military Welfare</div>
         <div style="color:rgba(255,255,255,0.6);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;">Official Department</div>
