@@ -21,7 +21,7 @@ const emailWrapper = (content) => `
 async function sendWelcomeEmail(toEmail, fullName) {
   const { error } = await resend.emails.send({
     from: "Ukraine Military Welfare <noreply@yourdomain.com>",
-    reply_to: "noreply@yourdomain.com",
+    reply_to: process.env.SUPPORT_EMAIL || "support@yourdomain.com",
     to: [toEmail],
     subject: "Welcome to Ukraine Military Welfare Portal",
     html: emailWrapper(`
@@ -41,7 +41,7 @@ async function sendWelcomeEmail(toEmail, fullName) {
 async function sendApplicationConfirmation(toEmail, fullName, application) {
   const { error } = await resend.emails.send({
     from: "Ukraine Military Welfare <noreply@yourdomain.com>",
-    reply_to: "noreply@yourdomain.com",
+    reply_to: process.env.SUPPORT_EMAIL || "support@yourdomain.com",
     to: [toEmail],
     subject: `Leave Application Received — ${application.applicationRef}`,
     html: emailWrapper(`
@@ -78,7 +78,7 @@ async function sendStatusUpdateEmail(toEmail, fullName, application) {
   const statusColor = application.status === "Approved" ? "#16a34a" : application.status === "Rejected" ? "#dc2626" : "#f97316";
   const { error } = await resend.emails.send({
     from: "Ukraine Military Welfare <noreply@yourdomain.com>",
-    reply_to: "noreply@yourdomain.com",
+    reply_to: process.env.SUPPORT_EMAIL || "support@yourdomain.com",
     to: [toEmail],
     subject: `Application ${application.status} — ${application.applicationRef}`,
     html: emailWrapper(`
@@ -100,7 +100,7 @@ async function sendStatusUpdateEmail(toEmail, fullName, application) {
 async function sendAdminOTP(toEmail, otp) {
   const { error } = await resend.emails.send({
     from: "Ukraine Military Welfare <noreply@yourdomain.com>",
-    reply_to: "noreply@yourdomain.com",
+    reply_to: process.env.SUPPORT_EMAIL || "support@yourdomain.com",
     to: [toEmail],
     subject: "Admin Login OTP — Ukraine Military Welfare",
     html: emailWrapper(`
@@ -116,4 +116,4 @@ async function sendAdminOTP(toEmail, otp) {
   if (error) throw new Error(error.message);
 }
 
-module.exports = { sendWelcomeEmail, sendApplicationConfirmation, sendStatusUpdateEmail, sendAdminOTP };
+module.exports = { sendWelcomeEmail, sendApplicationConfirmation, sendStatusUpdateEmail, sendAdminOTP, emailWrapper };
