@@ -82,13 +82,13 @@ router.post("/send", protect, async (req, res) => {
 
     const styledHtml = emailWrapper(`
       <div style="background:#fff;border-radius:10px;padding:28px;">
-        <p style="font-size:14px;color:#374151;line-height:1.8;margin:0;white-space:pre-wrap;">${html}</p>
+        <div style="font-size:14px;color:#374151;line-height:1.8;white-space:pre-wrap;">${html}</div>
       </div>
     `);
 
     const { data, error } = await resend.emails.send({
       from: `Ukraine Military Welfare <${SUPPORT_ADDRESS}>`,
-      reply_to: SUPPORT_ADDRESS,
+      replyTo: SUPPORT_ADDRESS,
       to: [to],
       subject,
       html: styledHtml,
